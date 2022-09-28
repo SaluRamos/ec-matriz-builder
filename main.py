@@ -1,6 +1,5 @@
 import string
 from lxml import etree
-import time
 import pyperclip
 
 class Subject:
@@ -20,8 +19,8 @@ class Subject:
         print(f"{self.id},{self.code},{self.name},{self.model},{self.workload},{self.dependencies},{self.semester}, {self.opt}")
         print("--------------------------------")
 
-def get_course_subjects() -> dict:
-    with open("matriz.html", "r", encoding="utf-8") as f:
+def get_course_subjects(filename:string) -> dict:
+    with open(f"{filename}.html", "r", encoding="utf-8") as f:
         matrix_html = f.read()
     dependencies = {}
     root = etree.HTML(matrix_html)
@@ -71,7 +70,7 @@ def get_course_subjects() -> dict:
     return dependencies
 
 if __name__ == "__main__":
-    dependencies = get_course_subjects()
+    dependencies = get_course_subjects("grade ec")
     #começa a criar o grafo
     course_graph = ""
     for i in dependencies.values():
@@ -91,8 +90,5 @@ if __name__ == "__main__":
                     atual_subject_dependencie_graph_name = f"{atual_subject_dependencie_graph_name} OBRIGATÓRIA"
                 new_direction = f"{atual_subject_dependencie_graph_name}>{atual_subject_graph_name}\n"
                 course_graph += new_direction
-
-
-
-    print(course_graph)
     pyperclip.copy(course_graph)
+    print("grafo copiado para área de transferencia!")
