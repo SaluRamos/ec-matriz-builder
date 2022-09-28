@@ -76,26 +76,19 @@ if __name__ == "__main__":
     course_graph = ""
     for i in dependencies.values():
         if i.opt != "Obrigatória":
-            atual_subject_graph_name = f"{i.name} OPCIONAL"
+            atual_subject_graph_name = f"{i.name} OPCIONAL {i.opt}"
         else:
             atual_subject_graph_name = f"{i.name} OBRIGATÓRIA"
-
-
-
         if i.dependencies == []:
-            new_direction = f"{atual_subject_graph_name}-{atual_subject_graph_name}\n"
+            new_direction = f"{atual_subject_graph_name}>{atual_subject_graph_name}\n"
             course_graph += new_direction
         else:
             for j in i.dependencies: #ittera entre as dependencias
                 atual_subject_dependencie_graph_name = dependencies[j].name
                 if i.opt != "Obrigatória":
-                    atual_subject_dependencie_graph_name = f"{atual_subject_dependencie_graph_name} OPCIONAL"
+                    atual_subject_dependencie_graph_name = f"{atual_subject_dependencie_graph_name} OPCIONAL {i.opt}"
                 else:
                     atual_subject_dependencie_graph_name = f"{atual_subject_dependencie_graph_name} OBRIGATÓRIA"
-
-
-
-
                 new_direction = f"{atual_subject_dependencie_graph_name}>{atual_subject_graph_name}\n"
                 course_graph += new_direction
 
